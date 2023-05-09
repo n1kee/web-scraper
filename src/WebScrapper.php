@@ -94,7 +94,7 @@ class ImageScrapper extends BaseScrapper {
             return preg_replace("|^(?=/)|", $origin, $imgUrlPart);
         }, $matches[1]);
 
-        $imgUrls = array_values(array_unique($imgUrls));
+        $imgUrls = array_unique($imgUrls);
 
         $imgUrls = $this->filterImageUrls($imgUrls);
 
@@ -102,6 +102,6 @@ class ImageScrapper extends BaseScrapper {
             return new Image($imgUrl);
         }, $imgUrls);
 
-        return $images;
+        return array_values($images);
     }
 }
