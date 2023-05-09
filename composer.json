@@ -1,0 +1,12 @@
+{
+    "name": "web-scrapper",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "WebScrapper\\": "src/"
+        }
+    },
+    "require": {
+        "marc1706/fast-image-size": "^1.1"
+    }
+}
