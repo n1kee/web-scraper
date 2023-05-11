@@ -18,7 +18,7 @@ class WebScrapper {
         $this->container = $container;
     }
 
-    function downloadImages() {
+    function getImages() {
         return new ImageScrapper($this->container);
     } 
 }
@@ -78,7 +78,7 @@ class ImageScrapper extends BaseScrapper {
         return $imgUrls;
     }
 
-    function get() {
+    function getUrls() {
         $url = $this->url;
         $html = $this->html ?? file_get_contents($url);
 
@@ -96,9 +96,17 @@ class ImageScrapper extends BaseScrapper {
 
         $imgUrls = array_unique($imgUrls);
 
-        $imgUrls = $this->filterImageUrls($imgUrls);
+        return array_values($this->filterImageUrls($imgUrls));
+    }
+
+    function get() {
+
+        $imgUrls = $this->getUrls();
 
         $images = array_map(function($imgUrl) {
+            # For SVG
+            # libmagickcore-6.q16-2-extra
+            # potrace
             return new Image($imgUrl);
         }, $imgUrls);
 
