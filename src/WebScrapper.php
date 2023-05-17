@@ -92,11 +92,11 @@ class ImageScrapper extends BaseScrapper {
         preg_match_all($imgRegex, $html, $matches);
         $origin = preg_match($originRegex, $url, $originMatches) ? reset($originMatches) : null;
 
-        $imgUrls = array_map(function($imgUrlPart) use ($origin) {
-            return FileSystem::addPath($origin, $imgUrlPart);
+        $imgSrcList = array_map(function($imgSrc) use ($url) {
+            return FileSystem::resolveSrc($url, $imgSrc);
         }, $matches[1]);
 
-        $imgUrls = array_unique($imgUrls);
+        $imgUrls = array_unique($imgSrcList);
 
         return array_values($this->filterImageUrls($imgUrls));
     }
