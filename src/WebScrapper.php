@@ -4,6 +4,8 @@ namespace WebScrapperBundle;
 use Symfony\Component\DependencyInjection\Container;
 use FilesBundle\Image;
 use FastImageSize\FastImageSize;
+use FilesBundle\Helper\FileSystem;
+
 use Exception;
 
 class WebScrapper {
@@ -91,7 +93,7 @@ class ImageScrapper extends BaseScrapper {
         $origin = preg_match($originRegex, $url, $originMatches) ? reset($originMatches) : null;
 
         $imgUrls = array_map(function($imgUrlPart) use ($origin) {
-            return preg_replace("|^(?=/)|", $origin, $imgUrlPart);
+            return FileSystem::addPath($origin, $imgUrlPart);
         }, $matches[1]);
 
         $imgUrls = array_unique($imgUrls);
