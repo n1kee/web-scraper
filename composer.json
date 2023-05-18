@@ -1,5 +1,5 @@
 {
-    "name": "web-scraper",
+    "name": "n1kee/web-scraper",
     "type": "symfony-bundle",
     "autoload": {
         "psr-4": {
