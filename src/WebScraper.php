@@ -7,8 +7,10 @@ use FilesBundle\Helper\FileSystem;
 use FasterImage\FasterImage;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-use Exception;
-
+/**
+ * The class for web scraping.
+ *
+ */
 class WebScraper {
 
     /**
@@ -20,15 +22,17 @@ class WebScraper {
     ) {
     }
 
+    /**
+     * Get's a web scrapper for working with images.
+     *
+     * @return ImageScrapper
+     */
     function getImages() {
         return new ImageScrapper($this->container, $this->httpClient);
     } 
 }
 
-class BaseScrapper {
-}
-
-class ImageScrapper extends BaseScrapper {
+class ImageScrapper {
 
     private string $html;
     private string $url = "";
@@ -44,26 +48,56 @@ class ImageScrapper extends BaseScrapper {
     ) {
     }
 
+    /**
+     * Set's html of a web page for scraping.
+     *
+     * @param string $html
+     * @return ImageScrapper
+     */
     function setHtml(string $html) {
         $this->html = $html;
         return $this;
     }
 
+    /**
+     * Set's a URL for scraping.
+     *
+     * @param string $url A URL for scraping.
+     * @return ImageScrapper
+     */
     function setUrl(string $url) {
         $this->url = $url;
         return $this;
     }
 
+    /**
+     * Set's a minimum with of images to be downloaded.
+     *
+     * @param float $minWidth Minimum image width.
+     * @return ImageScrapper
+     */
     function setMinWidth(float $minWidth) {
         $this->minWidth = $minWidth;
         return $this;
     }
 
+    /**
+     * Set's minimum height of images to be downloaded.
+     *
+     * @param float $minHeight Minimum image height.
+     * @return ImageScrapper
+     */
     function setMinHeight(float $minHeight) {
         $this->minHeight = $minHeight;
         return $this;
     }
 
+    /**
+     * Filters images URL's.
+     *
+     * @param array $imgUrls Array of URL's to be sorted.
+     * @return ImageScrapper
+     */
     protected function filterImageUrls(array $imgUrls) {
         $client = new FasterImage;
 
@@ -83,6 +117,11 @@ class ImageScrapper extends BaseScrapper {
         return $imgUrls;
     }
 
+    /**
+     * Get's URL's of images from the web page.
+     *
+     * @return array URL's of images from the web page.
+     */
     function getUrls() {
         $url = $this->url;
         $html = $this->html ?? file_get_contents($url);
@@ -104,6 +143,11 @@ class ImageScrapper extends BaseScrapper {
         return array_values($this->filterImageUrls($imgUrls));
     }
 
+    /**
+     * Gets images from the web page.
+     *
+     * @return array Paths of the saved images.
+     */
     function get() {
 
         $imgUrls = $this->getUrls();
