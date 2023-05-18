@@ -17,14 +17,14 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    WebScrapperBundle\:
+    WebScraperBundle\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
     #         - '../src/Entity/'
     #         - '../src/Kernel.php'
-    WebScrapperBundle\WebScrapper:
-       class: WebScrapperBundle\WebScrapper
+    WebScraperBundle\WebScraper:
+       class: WebScraperBundle\WebScraper
        arguments:
            - "@service_container"
 

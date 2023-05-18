@@ -1,14 +1,14 @@
 <?php
 
-namespace WebScrapperBundle;
+namespace WebScraperBundle;
 use Symfony\Component\DependencyInjection\Container;
 use FilesBundle\Image;
-use FastImageSize\FastImageSize;
 use FilesBundle\Helper\FileSystem;
+use FasterImage\FasterImage;
 
 use Exception;
 
-class WebScrapper {
+class WebScraper {
 
     private Container $container;
 
@@ -65,15 +65,18 @@ class ImageScrapper extends BaseScrapper {
     }
 
     protected function filterImageUrls(array $imgUrls) {
-        $imgUrls = array_filter($imgUrls, function($url) {
+        $client = new FasterImage;
 
-            # WEBP format not working
-            $imgSize = (new FastImageSize)->getImageSize($url);
+        $batchResult = $client->batch($imgUrls);
 
-            if ($imgSize) {
-                if ($imgSize["width"] < $this->minWidth) return false;
-                if ($imgSize["height"] < $this->minHeight) return false;
-            }
+        $imgUrls = array_filter($imgUrls, function($url)
+            use ($batchResult) {
+
+            $imageData = $batchResult[$url];
+            list($imgWidth, $imgHeight) = $imageData['size'];
+            if ($imgWidth < $this->minWidth) return false;
+            if ($imgHeight < $this->minHeight) return false;
+
             return true;
         });
         

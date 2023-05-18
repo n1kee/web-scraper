@@ -3,10 +3,10 @@
     "type": "symfony-bundle",
     "autoload": {
         "psr-4": {
-            "WebScrapper\\": "src/"
+            "WebScraper\\": "src/"
         }
     },
     "require": {
-        "marc1706/fast-image-size": "^1.1"
+        "fasterimage/fasterimage": "^1.5"
     }
 }

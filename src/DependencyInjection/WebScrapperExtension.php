@@ -1,12 +1,12 @@
 <?php
 
-namespace WebScrapperBundle\DependencyInjection;
+namespace WebScraperBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class WebScrapperExtension extends Extension
+class WebScraperExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $containerBuilder)
     {var_dump('We\'re alive!');die;
