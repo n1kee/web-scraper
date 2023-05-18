@@ -8,8 +8,7 @@ use FasterImage\FasterImage;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * The class for web scraping.
- *
+ * A class for web scraping.
  */
 class WebScraper {
 
@@ -23,16 +22,16 @@ class WebScraper {
     }
 
     /**
-     * Get's a web scrapper for working with images.
+     * Get's a web scraper for working with images.
      *
-     * @return ImageScrapper
+     * @return ImageScraper
      */
     function getImages() {
-        return new ImageScrapper($this->container, $this->httpClient);
+        return new ImageScraper($this->container, $this->httpClient);
     } 
 }
 
-class ImageScrapper {
+class ImageScraper {
 
     private string $html;
     private string $url = "";
@@ -52,7 +51,7 @@ class ImageScrapper {
      * Set's html of a web page for scraping.
      *
      * @param string $html
-     * @return ImageScrapper
+     * @return ImageScraper
      */
     function setHtml(string $html) {
         $this->html = $html;
@@ -60,10 +59,10 @@ class ImageScrapper {
     }
 
     /**
-     * Set's a URL for scraping.
+     * Set's an URL for scraping.
      *
      * @param string $url A URL for scraping.
-     * @return ImageScrapper
+     * @return ImageScraper
      */
     function setUrl(string $url) {
         $this->url = $url;
@@ -74,7 +73,7 @@ class ImageScrapper {
      * Set's a minimum with of images to be downloaded.
      *
      * @param float $minWidth Minimum image width.
-     * @return ImageScrapper
+     * @return ImageScraper
      */
     function setMinWidth(float $minWidth) {
         $this->minWidth = $minWidth;
@@ -85,7 +84,7 @@ class ImageScrapper {
      * Set's minimum height of images to be downloaded.
      *
      * @param float $minHeight Minimum image height.
-     * @return ImageScrapper
+     * @return ImageScraper
      */
     function setMinHeight(float $minHeight) {
         $this->minHeight = $minHeight;
@@ -95,8 +94,8 @@ class ImageScrapper {
     /**
      * Filters images URL's.
      *
-     * @param array $imgUrls Array of URL's to be sorted.
-     * @return ImageScrapper
+     * @param array $imgUrls Array of URL's to be filtered.
+     * @return array List of URL's.
      */
     protected function filterImageUrls(array $imgUrls) {
         $client = new FasterImage;
@@ -120,7 +119,7 @@ class ImageScrapper {
     /**
      * Get's URL's of images from the web page.
      *
-     * @return array URL's of images from the web page.
+     * @return array List of URL's.
      */
     function getUrls() {
         $url = $this->url;
@@ -156,6 +155,7 @@ class ImageScrapper {
             return $this->httpClient->request('GET', $imgUrl);
         }, $imgUrls);
 
+        # Download images asynchronously.
         $images = array_map(function($response) {
             $imgContent = $response->getContent();
             $img = new Image();

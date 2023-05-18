@@ -17,6 +17,6 @@ class WebScraperBundle extends AbstractBundle {
         $container->import(__DIR__ . '/../config/services.yaml');
     
         #$definition = $builder
-            #->autowire('aaa.web-scrapper', WebScraper::class);
+            #->autowire('aaa.web-scraper', WebScraper::class);
     }
 }
