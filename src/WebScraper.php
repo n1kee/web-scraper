@@ -5,23 +5,23 @@ use Symfony\Component\DependencyInjection\Container;
 use FilesBundle\Image;
 use FilesBundle\Helper\FileSystem;
 use FasterImage\FasterImage;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use Exception;
 
 class WebScraper {
 
-    private Container $container;
-
     /**
      * @param Container $container
      */
-    function __construct(Container $container)
-    {
-        $this->container = $container;
+    function __construct(
+        protected Container $container,
+        protected HttpClientInterface $httpClient,
+    ) {
     }
 
     function getImages() {
-        return new ImageScrapper($this->container);
+        return new ImageScrapper($this->container, $this->httpClient);
     } 
 }
 
@@ -34,14 +34,14 @@ class ImageScrapper extends BaseScrapper {
     private string $url = "";
     private int $minWidth = 0;
     private int $minHeight = 0;
-    private Container $container;
 
     /**
      * @param Container $container
      */
-    function __construct(Container $container)
-    {
-        $this->container = $container;
+    function __construct(
+        protected Container $container,
+        protected HttpClientInterface $httpClient,
+    ) {
     }
 
     function setHtml(string $html) {
@@ -108,12 +108,16 @@ class ImageScrapper extends BaseScrapper {
 
         $imgUrls = $this->getUrls();
 
-        $images = array_map(function($imgUrl) {
-            # For SVG
-            # libmagickcore-6.q16-2-extra
-            # potrace
-            return new Image($imgUrl);
+        $imagesResponses = array_map(function($imgUrl) {
+            return $this->httpClient->request('GET', $imgUrl);
         }, $imgUrls);
+
+        $images = array_map(function($response) {
+            $imgContent = $response->getContent();
+            $img = new Image();
+            $img->readImageBlob($imgContent);
+            return $img;
+        }, $imagesResponses);
 
         return array_values($images);
     }
