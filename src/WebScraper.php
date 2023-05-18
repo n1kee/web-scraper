@@ -95,7 +95,7 @@ class ImageScraper {
      * Filters images URL's.
      *
      * @param array $imgUrls Array of URL's to be filtered.
-     * @return array List of URL's.
+     * @return array List of filtered URL's.
      */
     protected function filterImageUrls(array $imgUrls) {
         $client = new FasterImage;
