@@ -1,7 +1,7 @@
 <?php
 
 namespace WebScraperBundle;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use FilesBundle\Image;
 use FilesBundle\Helper\FileSystem;
 use FasterImage\FasterImage;
@@ -13,10 +13,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class WebScraper {
 
     /**
-     * @param Container $container
+     * @param ContainerInterface $container
      */
     function __construct(
-        protected Container $container,
+        protected ContainerInterface $container,
         protected HttpClientInterface $httpClient,
     ) {
     }
@@ -39,10 +39,10 @@ class ImageScraper {
     private int $minHeight = 0;
 
     /**
-     * @param Container $container
+     * @param ContainerInterface $container
      */
     function __construct(
-        protected Container $container,
+        protected ContainerInterface $container,
         protected HttpClientInterface $httpClient,
     ) {
     }

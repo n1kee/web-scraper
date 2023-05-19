@@ -28,5 +28,8 @@ services:
        arguments:
            - "@service_container"
 
+    web_scraper_bundle.web_scraper:
+       class: WebScraperBundle\WebScraper
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
