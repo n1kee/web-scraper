@@ -8,6 +8,7 @@
     },
     "require": {
         "fasterimage/fasterimage": "^1.5",
-        "symfony/framework-bundle": "^5.2"
+        "symfony/framework-bundle": "^5.2",
+        "symfony/http-client": "^6.2"
     }
 }
