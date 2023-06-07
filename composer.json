@@ -1,0 +1,19 @@
+{
+    "name": "n1kee/web-scraper-bundle",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "WebScraperBundle\\": "src/"
+        }
+    },
+    "require": {
+        "fasterimage/fasterimage": "^1.5",
+        "symfony/cache": "^6.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.17"
+    },
+    "scripts": {
+        "fix-psr" : "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix src"
+    }
+}
